@@ -1,31 +1,42 @@
 <script setup>
-import {onMounted, ref} from 'vue'
-// import { useFetch } from '/fetch.js'
+import {onMounted, ref, toRef} from 'vue'
 
-// const data = ref(null)
-// const error = ref(null)
-const lat = '58.000'
-const lon = '56.316'
-const cnt = '7'
+const API_KEY = '13b55ccc56185568d11b8e020229a105'
 
-const apiKey = '13b55ccc56185568d11b8e020229a105'
-const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-const apiPro = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
 
-// const { data, error } = useFetch(test)
+const props = defineProps({
+  lat: {
+    type: Number,
+    default: 58.000
+  },
+  lon: {
+    type: Number,
+    default: 56.316
+  }
+})
 
+const latRef = toRef(props.lat)
+const lonRef = toRef(props.lon)
+
+const api = `https://api.openweathermap.org/data/2.5/weather?lat=${latRef.value}&lon=${lonRef.value}&appid=${API_KEY}&units=metric`
+const apiPro = `https://api.openweathermap.org/data/2.5/forecast?lat=${latRef.value}&lon=${lonRef.value}&appid=${API_KEY}&units=metric`
 
 onMounted(async () => {
   // TODO Работает только с VPN
   const time = new Date().getTime()
-  console.warn('1111', api)
-  const test = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${time}&appid=${apiKey}`
+
+  const test = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latRef.value}&lon=${lonRef.value}&dt=${time}&appid=${API_KEY}`
+  const data = ref(null)
+
+  console.log(2)
   await fetch(api)
-      .then((res) => console.warn('res', res))
-      .then((json) => (data.value = json))
-      .catch((err) => (console.error('err', err)))
-  console.warn('data', data.value)
-  console.warn('data', data.value)
+      .then((res) => {
+        console.warn('res', res)
+        data.value = res
+      })
+      .catch((err) => (console.error('err', err.message)))
+      .finally(() => console.log(3))
+  console.log(4)
 })
 
 </script>
@@ -33,7 +44,7 @@ onMounted(async () => {
 <!--<script setup>-->
 <!--import { useFetch } from './fetch.js'-->
 <!--const apiKey = '13b55ccc56185568d11b8e020229a105'-->
-<!--const test = `https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=${apiKey}`-->
+<!--const test = `https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=${API_KEY}`-->
 <!--const { data, error } = useFetch(test)-->
 <!--</script>-->
 
