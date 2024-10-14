@@ -61,10 +61,10 @@ const dateParse = ref({
 })
 
 function parseDateWeather() {
-  dateParse.value.city = data.value?.name ?? ''
-  dateParse.value.temp = data.value?.main.temp ?? null
-  dateParse.value.tempMin = data.value?.main['temp_min'] ?? null
-  dateParse.value.tempMax = data.value?.main['temp_max'] ?? null
+  dateParse.value.city = data.value?.name.toUpperCase() ?? ''
+  dateParse.value.temp = Math.round(data.value?.main.temp) ?? null
+  dateParse.value.tempMin = Math.floor(data.value?.main['temp_min']) ?? null
+  dateParse.value.tempMax = Math.ceil(data.value?.main['temp_max']) ?? null
   dateParse.value.weather = data.value?.weather.map(item => item.main).join()
   dateParse.value.day = dateObject.dayOfTheMonth
   dateParse.value.dayOfTheWeek = dateObject.dayOfTheWeek
@@ -74,23 +74,157 @@ function parseDateWeather() {
 </script>
 
 <template>
-  <div>
+  <div class="weather">
     <button @click="getWeather">получение погоды</button>
-    <div v-if="pending">Загрузка...</div>
-    <div>
-      <h2> Парс данных </h2>
-      <div>
-        <pre>
-          {{ dateParse }}
-        </pre>
-        <pre>
-          {{ data }}
-        </pre>
+    <div v-if="pending" class="weather__loading">Загрузка...</div>
+    <div class="weather__container">
+      <div class="weather__top">
+        <div class="weather__top-img" />
+        <div class="weather__top-shadow" />
+        <div class="weather__top-content">
+          <div class="weather__top-box">
+            <p class="weather__top-description">{{ dateParse.temp }}</p>
+            <span class="weather__top-icon">°</span>
+          </div>
+          <strong class="weather__city">{{ dateParse.city }}</strong>
+        </div>
+      </div>
+      <div class="weather__bottom">
+        <p class="weather__bottom-date">{{ `${dateParse.dayOfTheWeek}, ${dateParse.day} ${dateParse.month}` }}</p>
+        <div class="weather__bottom-box">
+          <div class="weather__bottom-info">
+            <p class="weather__bottom-description">{{ dateParse.weather }}</p>
+            <p class="weather__bottom-temp">{{ dateParse.tempMin }}
+              <span class="weather__bottom-temp-icon">°</span>
+              <span class="weather__bottom-temp-slash">/</span>
+              {{ dateParse.tempMax }}
+              <span class="weather__bottom-temp-icon">°</span>
+            </p>
+          </div>
+          <div class="weather__bottom-icon">Icon</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.weather {
+}
 
+.weather__loading {
+}
+
+.weather__container {
+  max-width: 245px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.weather__top {
+  position: relative;
+  padding: 24px 24px 150px 24px;
+}
+
+.weather__top-img {
+  position: absolute;
+  inset: 0;
+  background-image: url("../../src/assets/img/perm.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  z-index: 1;
+}
+
+.weather__top-shadow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(271.24deg, #FDD368 -4.18%, #F8B70F -4.17%, rgba(222, 194, 123, 0.6) 110.03%),
+  linear-gradient(324.84deg, rgba(239, 188, 56, 0.136) 14.05%, rgba(250, 186, 24, 0.2) 100%);
+  z-index: 2;
+}
+
+.weather__top-content {
+  position: relative;
+  z-index: 10;
+}
+
+.weather__top-box {
+  position: relative;
+  width: fit-content;
+  padding-right: 20px;
+}
+
+.weather__top-description, .weather__top-icon {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 54px;
+  color: white;
+}
+
+.weather__top-icon {
+  position: absolute;
+  top: -8px;
+  right: 0;
+}
+
+.weather__city {
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 1px;
+}
+
+.weather__bottom {
+  padding: 16px 20px 16px 16px;
+}
+
+.weather__bottom-date {
+}
+
+.weather__bottom-box {
+}
+
+.weather__bottom-info {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 200px;
+  color: #191919;
+  margin-bottom: 6px;
+
+}
+
+.weather__bottom-description {
+  margin-bottom: 2px;
+}
+
+.weather__bottom-description, .weather__bottom-temp, .weather__bottom-temp-icon, .weather__bottom-temp-slash {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #6B6B6B;
+}
+
+.weather__bottom-temp {
+
+}
+
+.weather__bottom-temp-icon {
+
+}
+
+.weather__bottom-temp-slash {
+
+}
+
+
+.weather__bottom-temp-icon {
+
+}
+
+.weather__bottom-icon {
+}
 </style>
