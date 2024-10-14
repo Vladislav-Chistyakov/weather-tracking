@@ -1,11 +1,11 @@
 const daysOfTheWeek = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday ',
     'Saturday',
-    'Sunday'
 ]
 
 const months = [
@@ -28,5 +28,5 @@ const date = new Date()
 export const dateObject = {
     dayOfTheMonth: date.getDate(),
     month: months[date.getMonth()],
-    dayOfTheWeek: daysOfTheWeek[date.getDay() - 1],
+    dayOfTheWeek: daysOfTheWeek[date.getDay()],
 }
