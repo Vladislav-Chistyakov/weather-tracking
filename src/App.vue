@@ -4,11 +4,7 @@ import WeatherData from "./components/WeatherData.vue";
 
 <template>
   <div class="container">
-    <h1>Perm</h1>
-    <WeatherData></WeatherData>
-    <ul>
-
-    </ul>
+    <WeatherData />
   </div>
 </template>
 
