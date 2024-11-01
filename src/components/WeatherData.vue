@@ -84,8 +84,6 @@ const weatherShadow = computed(() => {
 
 <template>
   <div class="weather">
-    <button @click="getWeather">получение погоды</button>
-    {{ error }}
     <div v-if="pending" class="weather__loading">Загрузка...</div>
     <div v-else-if="!pending && !error" class="weather__container">
       <div class="weather__top">
