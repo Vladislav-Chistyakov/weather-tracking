@@ -1,9 +1,8 @@
 <script setup>
-import {computed, onMounted, ref, toRef} from 'vue'
+import { computed, onMounted, ref, toRef } from 'vue'
 import { dateObject } from './date.js'
 
 const API_KEY = '13b55ccc56185568d11b8e020229a105'
-
 
 const props = defineProps({
   lat: {
@@ -24,8 +23,6 @@ const latRef = toRef(props.lat)
 const lonRef = toRef(props.lon)
 
 const api = `https://api.openweathermap.org/data/2.5/weather?lat=${latRef.value}&lon=${lonRef.value}&appid=${API_KEY}&units=metric`
-// const apiPro = `https://api.openweathermap.org/data/2.5/forecast?lat=${latRef.value}&lon=${lonRef.value}&appid=${API_KEY}&units=metric`
-// const test = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latRef.value}&lon=${lonRef.value}&dt=${time}&appid=${API_KEY}`
 
 const getWeather = async () => {
   pending.value = true
@@ -83,7 +80,6 @@ const weatherShadow = computed(() => {
     return 'weather__top-shadow-very-cold';
   }
 })
-
 </script>
 
 <template>
@@ -115,7 +111,7 @@ const weatherShadow = computed(() => {
               <span class="weather__bottom-temp-icon">°</span>
             </p>
           </div>
-          <div class="weather__bottom-icon">Icon</div>
+          <div class="weather__bottom-icon">{{ dateParse.weather }}</div>
         </div>
       </div>
     </div>
@@ -132,19 +128,16 @@ const weatherShadow = computed(() => {
   height: 100vh;
 }
 
-.weather__loading {
-}
-
 .weather__container {
-  max-width: 245px;
-  border-radius: 15px;
+  min-width: 245px;
+  border-radius: 17px;
   overflow: hidden;
   box-shadow: 0 8px 16px 0 #00000040;
 }
 
 .weather__top {
   position: relative;
-  padding: 24px 24px 150px 24px;
+  padding: 21px 24px 146px 24px;
 }
 
 .weather__top-img {
@@ -216,7 +209,7 @@ const weatherShadow = computed(() => {
 .weather__top-description, .weather__top-icon {
   font-size: 40px;
   font-weight: 600;
-  line-height: 54px;
+  line-height: 48px;
   color: white;
 }
 
@@ -238,10 +231,21 @@ const weatherShadow = computed(() => {
   padding: 16px 20px 16px 16px;
 }
 
+.weather__bottom-date, .weather__bottom-icon {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #5E5E5E;
+}
+
 .weather__bottom-date {
+  margin-bottom: 6px;
 }
 
 .weather__bottom-box {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
 }
 
 .weather__bottom-info {
@@ -249,38 +253,16 @@ const weatherShadow = computed(() => {
   font-weight: 700;
   line-height: 200px;
   color: #191919;
-  margin-bottom: 6px;
-
-}
-
-.weather__bottom-description {
-  margin-bottom: 2px;
 }
 
 .weather__bottom-description, .weather__bottom-temp, .weather__bottom-temp-icon, .weather__bottom-temp-slash {
   font-size: 12px;
   font-weight: 700;
   line-height: 16px;
-  color: #6B6B6B;
+  color: #C4C4C4;
 }
 
-.weather__bottom-temp {
-
-}
-
-.weather__bottom-temp-icon {
-
-}
-
-.weather__bottom-temp-slash {
-
-}
-
-
-.weather__bottom-temp-icon {
-
-}
-
-.weather__bottom-icon {
+.weather__bottom-description {
+  margin-bottom: 2px;
 }
 </style>
