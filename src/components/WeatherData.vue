@@ -66,18 +66,19 @@ function parseDateWeather() {
 }
 
 const weatherShadow = computed(() => {
-  if (dateParse.value.temp > 25) {
-    return 'weather__top-shadow-hot';
-  } else if (dateParse.value.temp > 15) {
-    return 'weather__top-shadow-warm';
-  } else if (dateParse.value.temp > 5) {
-    return 'weather__top-shadow-mild';
-  } else if (dateParse.value.temp > -5) {
-    return 'weather__top-shadow-cool';
-  } else if (dateParse.value.temp > -15) {
-    return 'weather__top-shadow-cold';
-  } else {
-    return 'weather__top-shadow-very-cold';
+  switch (dateParse.value.temp) {
+    case data.value.temp > 25:
+      return 'weather__top-shadow-hot';
+    case data.value.temp > 15:
+      return 'weather__top-shadow-warm';
+    case data.value.temp > 5:
+      return 'weather__top-shadow-mild';
+    case data.value.temp > -5:
+      return 'weather__top-shadow-cool';
+    case data.value.temp > -15:
+      return 'weather__top-shadow-cold';
+    default:
+      return 'weather__top-shadow-very-cold';
   }
 })
 </script>
